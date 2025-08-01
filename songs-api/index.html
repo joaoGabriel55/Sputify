@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Songify</title>
+  </head>
+  <body>
+    <h1>Songify</h1>
+
+    <p>Welcome to the Songify API!</p>
+
+    <button id="getSong">Get a song</button>
+  </body>
+
+  <script>
+    // Example of fetching song data
+    document.getElementById("getSong").addEventListener("click", function () {
+      fetch("http://localhost:4567/songs/1/audio")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.blob();
+        })
+        .then((blob) => {
+          const audioUrl = URL.createObjectURL(blob);
+          const audio = new Audio(audioUrl);
+          audio.play();
+        })
+        .catch((error) =>
+          console.error("There was a problem with the fetch operation:", error)
+        );
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+  </style>
+</html>
