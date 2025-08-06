@@ -2,15 +2,13 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-.container {
-  min-height: 100%;
+.main-container {
+  height: auto;
   padding: 10px;
-}
-
-.container *+* {
-  margin-top: 20px;
+  overflow-y: scroll;
 }
 
 .main-header {
@@ -18,15 +16,31 @@
   background: #aaa;
 }
 
-.main-content {
-  min-height: 1000px;
+.track-player {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  background: grey;
 }
 
-.track-player {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 10px;
-  width: 100%;
-  height: 30px;
-  background: grey;
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  width: 80%;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+}
+
+.track-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
 }
