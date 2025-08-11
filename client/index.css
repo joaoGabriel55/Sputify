@@ -10,6 +10,7 @@
 .main-container {
   height: auto;
   padding: 10px;
+  padding-bottom: 40px;
   overflow-y: scroll;
   background-color: #222;
 }
@@ -25,6 +26,29 @@
   width: 100%;
   height: auto;
   background: grey;
+
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  padding: 10px;
+
+  .player-controls {
+    justify-self: center;
+
+    .player-button {
+      cursor: pointer;
+      border-radius: 100%;
+      border: none;
+      padding: 8px;
+
+      span {
+        font-size: 48px;
+      }
+    }
+  }
+
+  .player-actions {
+    justify-self: end;
+  }
 }
 
 .tracks-grid {
@@ -72,3 +96,4 @@
   height: 130px;
   object-fit: cover;
 }
+
