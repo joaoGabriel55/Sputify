@@ -20,35 +20,61 @@
   background: #aaa;
 }
 
+
 .track-player {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  background: grey;
-
+  background: #222222fa;
+  box-shadow: 0 -2px 16px #00000052;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  padding: 10px;
+  align-items: center;
+  padding: 16px 32px;
 
-  .player-controls {
-    justify-self: center;
-
-    .player-button {
-      cursor: pointer;
-      border-radius: 100%;
-      border: none;
-      padding: 8px;
-
-      span {
-        font-size: 48px;
-      }
-    }
+  .track-title {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
   }
+}
 
-  .player-actions {
-    justify-self: end;
-  }
+.player-controls {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-button {
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  background: #333;
+  color: #eee;
+  padding: 8px;
+  box-shadow: 0 2px 8px #0000002e;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.player-button:hover {
+  background: #666;
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.player-button span {
+  font-size: 36px;
+}
+
+.player-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
 }
 
 .tracks-grid {
@@ -63,15 +89,16 @@
   color: #eee;
   width: 100%;
 }
-  .track-info .track-title {
-    font-size: 1em;
-    font-weight:700;
-  }
 
-  .track-info .track-artist {
-    font-size: 0.9em;
-    color: #ccc;
-  }
+.track-info .track-title {
+  font-size: 1em;
+  font-weight:700;
+}
+
+.track-info .track-artist {
+  font-size: 0.9em;
+  color: #ccc;
+}
 
 
 .track-card {
