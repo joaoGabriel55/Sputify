@@ -1,3 +1,35 @@
+:root {
+  --primary-color: #ef7c8e;
+  --secondary-color: #fae8e0;
+  --accent-color: #b6e2d3;
+
+  --accent-fg-color: #444;
+  --font-color: #fff;
+  --secondary-font-color: #ccc;
+  --bg-color: #222222fa;
+  --shadow-color: #00000052;
+  --button-color: #333;
+  --button-font-color: #eee;
+  --button-hover-color: #666;
+  --button-hover-font-color: #fff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --accent-fg-color: #e6e6e6;
+    --font-color: #222;
+    --secondary-font-color: #444;
+    --bg-color: #faf9f6;
+    --shadow-color: #b6e2d352;
+    --button-color: #e6e6e6;
+    --button-font-color: #0a0909;
+    --button-hover-color: #b6e2d3;
+    --button-hover-font-color: #222;
+
+    scrollbar-color: auto;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -12,12 +44,14 @@
   padding: 10px;
   padding-bottom: 40px;
   overflow-y: scroll;
-  background-color: #222;
+  background-color: var(--bg-color);
 }
 
 .main-header {
   height: 50px;
-  background: #aaa;
+  background: var(--accent-fg-color);
+  color: var(--primary-color);
+  padding: 5px 10px;
 }
 
 
@@ -26,8 +60,8 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #222222fa;
-  box-shadow: 0 -2px 16px #00000052;
+  background: var(--bg-color);
+  box-shadow: 0 -2px 16px var(--shadow-color);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
   display: grid;
@@ -36,9 +70,23 @@
   padding: 16px 32px;
 
   .track-title {
-    color: white;
+    color: var(--font-color);
     font-size: 14px;
     font-weight: 600;
+  }
+
+  .player-track-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+
+    .track-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   }
 }
 
@@ -53,16 +101,19 @@
   cursor: pointer;
   border-radius: 50%;
   border: none;
-  background: #333;
-  color: #eee;
+  background: var(--button-color);
+  color: var(--button-font-color);
   padding: 8px;
-  box-shadow: 0 2px 8px #0000002e;
+  box-shadow: 0 2px 8px var(--shadow-color);
   transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .player-button:hover {
-  background: #666;
-  color: #fff;
+  background: var(--button-hover-color);
+  color: var(--button-hover-font-color);
   transform: scale(1.1);
 }
 
@@ -86,7 +137,7 @@
 }
 
 .track-info {
-  color: #eee;
+  color: var(--button-font-color);
   width: 100%;
 }
 
@@ -97,7 +148,7 @@
 
 .track-info .track-artist {
   font-size: 0.9em;
-  color: #ccc;
+  color: var(--secondary-font-color);
 }
 
 
@@ -106,9 +157,9 @@
   flex-direction: column;
   align-items: center;
   padding: 10px;
-  background: #444;
+  background: var(--accent-fg-color);
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+  box-shadow: 0 4px 16px var(--shadow-color);
   gap: 10px;
   transition: transform 0.2s;
   cursor: pointer;
