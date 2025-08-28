@@ -39,12 +39,15 @@
   scrollbar-color: #bbb #222;
 }
 
+body {
+  background-color: var(--bg-color);
+}
+
 .main-container {
   height: auto;
   padding: 10px;
-  padding-bottom: 40px;
+  padding-bottom: 10vh;
   overflow-y: scroll;
-  background-color: var(--bg-color);
 }
 
 .main-header {
@@ -56,6 +59,7 @@
 
 
 .track-player {
+  display: none;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -64,7 +68,6 @@
   box-shadow: 0 -2px 16px var(--shadow-color);
   border-top-left-radius: 16px;
   border-top-right-radius: 16px;
-  display: grid;
   grid-template-columns: 1fr 2fr 1fr;
   align-items: center;
   padding: 16px 32px;
@@ -175,3 +178,65 @@
   object-fit: cover;
 }
 
+.track-player-mobile {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  background: var(--bg-color);
+  box-shadow: 0 -2px 16px var(--shadow-color);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+
+  .track-title-container {
+    will-change: transform;
+    animation: scrolling 10s linear infinite;
+    display: flex;
+  }
+
+  @keyframes scrolling {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .track-title {
+    color: var(--font-color);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .player-track-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .track-image {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+
+  .player-controls {
+    display: flex;
+    gap: 6px;
+  }
+}
+
+@media screen and (min-width: 540px) {
+  .track-player {
+    display: grid;
+  }
+
+  .track-player-mobile {
+    display: none;
+  }
+}
