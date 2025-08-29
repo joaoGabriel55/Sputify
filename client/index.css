@@ -57,7 +57,6 @@ body {
   padding: 5px 10px;
 }
 
-
 .track-player {
   display: none;
   position: fixed;
@@ -122,6 +121,34 @@ body {
 
 .player-button span {
   font-size: 36px;
+}
+
+.player-volume-container{
+  display: inline-flex;
+  gap: 3px;
+}
+
+.volume-button{
+  border-radius: 100%;
+  border: none;
+  background: none;
+  color: var(--button-font-color);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+
+  &:hover{
+    background: var(--button-hover-color);
+    color: var(--button-hover-font-color);
+  }
+}
+
+.player-volume {
+  cursor: pointer;
+  color: var(--primary-color);
 }
 
 .player-actions {

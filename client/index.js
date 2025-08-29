@@ -44,31 +44,52 @@ response.forEach(track => {
 });
 
 
-const playButton = document.querySelector("#play-btn");
+const playButton = document.getElementById("play-btn");
+const volumeSlider = document.getElementById("volume");
+const volumeMuteButton = document.getElementById("volume-mute-btn");
+const audioElement = document.querySelector("audio");
 
 window.addEventListener("load", () => {
+  let lastAudioVolumeBeforeMuted = 0;
+
   playButton.addEventListener("click", () => {
-    const audioElement = document.querySelector("audio");
-    const audioCtx = new AudioContext();
+    //const audioCtx = new AudioContext();
+    const playButtonIcon = playButton.querySelector("span")
+
     // const track = audioCtx.createMediaElementSource(audioElement);
-    console.log(audioElement);
-
-    audioElement.volume = 0.5;
-    
-
-    if (audioCtx.state === "suspended") {
-      audioCtx.resume();
-    }
-
+    // if (audioCtx.state === "suspended") {
+    //   audioCtx.resume();
+    // }
     if (playButton.dataset.playing === "false") {
       audioElement.play().catch(e=> console.log("play failed", e));
       playButton.dataset.playing = "true";
-      console.log(playButton);
-      // icon pause_circle
+      playButtonIcon.textContent = "pause_circle";
     } else if (playButton.dataset.playing === "true") {
       audioElement.pause();
       playButton.dataset.playing = "false";
-      console.log(playButton);
+      playButtonIcon.textContent = "play_circle";
     }
   });
+
+  volumeSlider.addEventListener("input", (event) => {
+    audioElement.volume = event.target.value;
+  });
+
+  volumeMuteButton.addEventListener("click", () => {
+    if (audioElement.volume === 0) {
+      audioElement.volume = lastAudioVolumeBeforeMuted;
+    } else {
+      lastAudioVolumeBeforeMuted = audioElement.volume;
+      audioElement.volume = 0;
+    }
+  }
+  )
+
+  audioElement.addEventListener("volumechange",(event) => {
+    console.log(event.target.volume);
+  });
 });
+
+// a interface de tempo/progresso da musica
+// mudar o audio selecionado com base no click
+// separar arquivos js por contextos e chamar individualmente no index.html
