@@ -8,6 +8,15 @@ const html = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8');
 
 let dom;
 let container;
+jest.mock('./api/index.js', () => ({
+  fetchTracks: jest.fn(() => Promise.resolve([
+    { id: 1, title: 'Track 1', artist: 'Artist 1' },
+    { id: 2, title: 'Track 2', artist: 'Artist 2' }
+  ])),
+  fetchTrack: jest.fn((id) => Promise.resolve(
+    { id: id, title: `Track ${id}`, artist: `Artist ${id}` }
+  ))
+}));
 
 describe('index.html', () => {
   beforeEach(() => {
@@ -18,12 +27,13 @@ describe('index.html', () => {
     dom = new JSDOM(html, { runScripts: 'dangerously' })
 
     var jsFiles = [
+        'api/index.js',
         'js/tracks.js'
     ];
 
     var scriptsContent = ``;
     for(var i =0; i < jsFiles.length; i++){
-        console.log(__dirname + '/' + jsFiles[i])
+        // console.log(__dirname + '/' + jsFiles[i])
       let scriptContent = fs.readFileSync( jsFiles[i], 'utf8');
       scriptsContent = scriptsContent + `
       /* ******************************************************************************************* */
@@ -43,26 +53,26 @@ describe('index.html', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  // it('renders the track list', () => {
-  //   global.fetch = jest.fn(() => {
-  //     console.log('Mock fetch called');
+  it('renders the track list', () => {
+    dom.window.fetch = jest.fn(() => {
+      console.log('Mock fetch called');
 
-  //     Promise.resolve({
-  //       json: () => Promise.resolve([
-  //         { id: 1, title: 'Track 1', artist: 'Artist 1' },
-  //         { id: 2, title: 'Track 2', artist: 'Artist 2' }
-  //       ])
-  //     })
-  //   });
+      return Promise.resolve({
+        json: () => Promise.resolve([
+          { id: 1, title: 'Track 1', artist: 'Artist 1' },
+          { id: 2, title: 'Track 2', artist: 'Artist 2' }
+        ])
+      })
+    });
 
-  //   const title1 = getByText(container, 'Track1');
-  //   const title2 = getByText(container, 'Track2');
-  //   const artist1 = getByText(container, 'Artist 1');
-  //   const artist2 = getByText(container, 'Artist 2');
+    const title1 = getByText(container, 'Track1');
+    const title2 = getByText(container, 'Track2');
+    const artist1 = getByText(container, 'Artist 1');
+    const artist2 = getByText(container, 'Artist 2');
 
-  //   expect(title1).toBeInTheDocument();
-  //   expect(title2).toBeInTheDocument();
-  //   expect(artist1).toBeInTheDocument();
-  //   expect(artist2).toBeInTheDocument();
-  // });
+    expect(title1).toBeInTheDocument();
+    expect(title2).toBeInTheDocument();
+    expect(artist1).toBeInTheDocument();
+    expect(artist2).toBeInTheDocument();
+  });
 })

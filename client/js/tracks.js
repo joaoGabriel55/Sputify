@@ -1,13 +1,3 @@
-const fetchTracks = async () => {
-  const response = await fetch("http://localhost:4567/songs");
-  return await response.json();
-};
-
-const fetchTrack = async (id) => {
-  const response = await fetch(`http://localhost:4567/songs/${id}/audio`);
-  return response;
-};
-
 function htmlToNode(html) {
   const template = document.createElement("template");
   template.innerHTML = html;
@@ -23,25 +13,30 @@ function htmlToNode(html) {
   return template.content.firstChild;
 }
 
-const response = await fetchTracks();
+const render = async () => {
+  const response = await fetchTracks();
 
-const tracksGrid = document.querySelector(".tracks-grid");
+  const tracksGrid = document.querySelector(".tracks-grid");
 
-response.forEach((track) => {
-  const htmlStr = `
-    <div class="track-card">
-      <img class="track-image" src="https://static.wikia.nocookie.net/beatles/images/8/82/Thebeatlesabbeyroad.jpg" alt="Track Title">
-      <div class="track-info">
-        <h3 class="track-title">${track.title}</h3>
-        <p class="track-artist">${track.artist}</p>
+  response.forEach((track) => {
+    const htmlStr = `
+      <div class="track-card">
+        <img class="track-image" src="https://static.wikia.nocookie.net/beatles/images/8/82/Thebeatlesabbeyroad.jpg" alt="Track Title">
+        <div class="track-info">
+          <h3 class="track-title">${track.title}</h3>
+          <p class="track-artist">${track.artist}</p>
+        </div>
       </div>
-    </div>
-`;
+  `;
 
-  const div = htmlToNode(htmlStr.trim());
+    const div = htmlToNode(htmlStr.trim());
 
-  tracksGrid.appendChild(div);
-});
+    tracksGrid.appendChild(div);
+  });
+}
+
+render();
+
 
 
 // interface volume e progresso mobile
