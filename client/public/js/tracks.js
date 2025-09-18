@@ -8,8 +8,7 @@ const fetchTrack = async (id) => {
   return response;
 };
 
-
-function htmlToNode(html) {
+export function htmlToNode(html) {
   const template = document.createElement("template");
   template.innerHTML = html;
   const nNodes = template.content.childNodes.length;
@@ -18,13 +17,15 @@ function htmlToNode(html) {
       `html parameter must represent a single node; got ${nNodes}. ` +
         "Note that leading or trailing spaces around an element in your " +
         'HTML, like " <img/> ", get parsed as text nodes neighbouring ' +
-        "the element; call .trim() on your input to avoid this."
+        "the element; call .trim() on your input to avoid this.",
     );
   }
   return template.content.firstChild;
 }
 
 const render = async () => {
+  console.log("Rendering tracks...");
+
   const response = await fetchTracks();
 
   const tracksGrid = document.querySelector(".tracks-grid");
@@ -44,11 +45,9 @@ const render = async () => {
 
     tracksGrid.appendChild(div);
   });
-}
+};
 
 render();
-
-
 
 // interface volume e progresso mobile
 // mudar o audio selecionado com base no click
