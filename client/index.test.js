@@ -8,44 +8,36 @@ const html = fs.readFileSync(path.resolve(__dirname, './index.html'), 'utf-8');
 
 let dom;
 let container;
-jest.mock('./api/index.js', () => ({
-  fetchTracks: jest.fn(() => Promise.resolve([
-    { id: 1, title: 'Track 1', artist: 'Artist 1' },
-    { id: 2, title: 'Track 2', artist: 'Artist 2' }
-  ])),
-  fetchTrack: jest.fn((id) => Promise.resolve(
-    { id: id, title: `Track ${id}`, artist: `Artist ${id}` }
-  ))
-}));
+
+// jest.mock('./js/tracks.js', () => ({
+//   fetchTracks: jest.fn(() => Promise.resolve([
+//     { id: 1, title: 'Track 1', artist: 'Artist 1' },
+//     { id: 2, title: 'Track 2', artist: 'Artist 2' }
+//   ])),
+//   fetchTrack: jest.fn((id) => Promise.resolve(
+//     { id: id, title: `Track ${id}`, artist: `Artist ${id}` }
+//   ))
+// }));
 
 describe('index.html', () => {
   beforeEach(() => {
-    // Constructing a new JSDOM with this option is the key
-    // to getting the code in the script tag to execute.
-    // This is indeed dangerous and should only be done with trusted content.
-    // https://github.com/jsdom/jsdom#executing-scripts
-    dom = new JSDOM(html, { runScripts: 'dangerously' })
-
-    var jsFiles = [
-        'api/index.js',
-        'js/tracks.js'
-    ];
-
-    var scriptsContent = ``;
-    for(var i =0; i < jsFiles.length; i++){
-        // console.log(__dirname + '/' + jsFiles[i])
-      let scriptContent = fs.readFileSync( jsFiles[i], 'utf8');
-      scriptsContent = scriptsContent + `
-      /* ******************************************************************************************* */
-      /* `+jsFiles[i]+` **************************************************************************** */
-      `+scriptContent;
-    };
-
-    let scriptElement = dom.window.document.createElement('script');
-    scriptElement.textContent = scriptsContent;
-    scriptElement.defer = true;
-    dom.window.document.head.appendChild(scriptElement);
+    // require('./api/index.js')
+    // require('./js/tracks.js')
+    dom = new JSDOM(html, { runScripts: 'dangerously', resources: 'usable' });
+    
+    dom.window.fetch = jest.fn(() => Promise.resolve({
+      json: () => Promise.resolve([
+        { id: 1, title: 'Track 1', artist: 'Artist 1' },
+        { id: 2, title: 'Track 2', artist: 'Artist 2' }
+      ])
+    }));
+    
     container = dom.window.document.body;
+    dom.window.document.body.innerHTML = html;
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks(); // Clear mock calls between tests
   });
 
   it('renders a heading', () => {
@@ -53,26 +45,22 @@ describe('index.html', () => {
     expect(heading).toBeInTheDocument();
   });
 
-  it('renders the track list', () => {
-    dom.window.fetch = jest.fn(() => {
-      console.log('Mock fetch called');
-
-      return Promise.resolve({
-        json: () => Promise.resolve([
-          { id: 1, title: 'Track 1', artist: 'Artist 1' },
-          { id: 2, title: 'Track 2', artist: 'Artist 2' }
-        ])
-      })
+  it('renders the track list', async () => {
+    dom.window.fetch.mockResolvedValue({
+      json: jest.fn().mockResolvedValue([
+        { id: 1, title: 'Track 1', artist: 'Artist 1' },
+        { id: 2, title: 'Track 2', artist: 'Artist 2' }
+      ])
     });
+    
+     const title1 = getByText(container, 'Track 1');
+      const title2 = getByText(container, 'Track 2');
+      const artist1 = getByText(container, 'Artist 1');
+      const artist2 = getByText(container, 'Artist 2');
 
-    const title1 = getByText(container, 'Track1');
-    const title2 = getByText(container, 'Track2');
-    const artist1 = getByText(container, 'Artist 1');
-    const artist2 = getByText(container, 'Artist 2');
-
-    expect(title1).toBeInTheDocument();
-    expect(title2).toBeInTheDocument();
-    expect(artist1).toBeInTheDocument();
-    expect(artist2).toBeInTheDocument();
+      expect(title1).toBeInTheDocument();
+      expect(title2).toBeInTheDocument();
+      expect(artist1).toBeInTheDocument();
+      expect(artist2).toBeInTheDocument();
   });
 })
