@@ -1,4 +1,4 @@
-import { HttpClient } from "../client/httpClient";
+import { HttpClient } from "../client/httpClient.js";
 
 export const fetchTracks = async () => {
   const client = HttpClient("http://localhost:4567");

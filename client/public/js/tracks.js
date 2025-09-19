@@ -1,3 +1,5 @@
+import { fetchTracks } from "./api/index.js";
+
 export function htmlToNode(html) {
   const template = document.createElement("template");
   template.innerHTML = html;
