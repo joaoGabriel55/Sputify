@@ -1,9 +1,11 @@
+import { HttpClient } from "../client/httpClient";
+
 export const fetchTracks = async () => {
-  const response = await fetch("http://localhost:4567/songs");
-  return await response.json();
+  const client = HttpClient("http://localhost:4567");
+  return await client.get("songs");
 };
 
 export const fetchTrack = async (id) => {
-  const response = await fetch(`http://localhost:4567/songs/${id}/audio`);
-  return await response.json();
+  const client = HttpClient("http://localhost:4567");
+  return await client.get(`songs/${id}/audio`);
 };
