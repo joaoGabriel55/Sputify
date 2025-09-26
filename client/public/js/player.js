@@ -19,13 +19,8 @@ window.addEventListener("load", () => {
   })
 
   playButton.addEventListener("click", () => {
-    //const audioCtx = new AudioContext();
     const playButtonIcon = playButton.querySelector("span");
 
-    // const track = audioCtx.createMediaElementSource(audioElement);
-    // if (audioCtx.state === "suspended") {
-    //   audioCtx.resume();
-    // }
     if (playButton.dataset.playing === "false") {
       audioElement.play().catch((e) => console.log("play failed", e));
       playButton.dataset.playing = "true";
@@ -35,6 +30,7 @@ window.addEventListener("load", () => {
       playButton.dataset.playing = "false";
       playButtonIcon.textContent = "play_circle";
     }
+    // player.playOrPauseSong()
   });
 
   volumeSlider.addEventListener("input", (event) => {
@@ -62,6 +58,9 @@ window.addEventListener("load", () => {
 
 // Display currentTime and duration properties in real-time
 function setTimes() {
+  if (!audioElement.currentTime) {
+    return
+  }
   playerCurrentTime.textContent = new Date(audioElement.currentTime * 1000)
     .toISOString()
     .substr(14, 5)
