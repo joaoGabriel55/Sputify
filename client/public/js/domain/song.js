@@ -14,23 +14,6 @@ class Song {
     }
 }
 
-class Player {
-    song
-
-     constructor(song, playService) {
-        this.song = song
-        this.playService = playService
-     }
-
-
-    playSong() {
-        this.playService.play()
-    }
-
-    stop() {
-        this.playService.stop()
-    }
-}
 
 class Tracklist {
   songs
@@ -45,3 +28,6 @@ class Tracklist {
 // fetchTracks pra popular a Tracklist
 // classe Tracklist -> mostrar as musicas listadas que o cara pode escolher
 // mocko o retorno
+
+
+// const player = new Player(songs, currentSong, playerService)

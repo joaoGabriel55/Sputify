@@ -1,34 +1,92 @@
+import PlayerService from "../service/playerService.js";
+
 class Player {
-    song
+  songs;
+  currentSong;
+  volume = 0;
+  status = "stopped";
+  progress = 0.0;
 
-     constructor(track, playService) {
-        this.track = track
-        this.playService = playService
-        this.#findPlayerElements();
-      }
-    
-    #findPlayerElements() {
-      this.playButton = document.getElementById("play-btn");
-      this.volumeSlider = document.getElementById("volume");
-      this.volumeMuteButton = document.getElementById("volume-mute-btn");
-      this.audioElement = document.querySelector("audio");
-      this.progress = document.querySelector(".player-progress")
-      this.progressFilled = document.querySelector(".player-progress-filled")
-      this.playerCurrentTime = document.querySelector(".player-time-current")
-      this.playerDuration = document.querySelector(".player-time-duration")
+  constructor(songs, currentSong = null, playerService = new PlayerService()) {
+    this.songs = songs;
+    this.currentSong = currentSong;
+    this.playerService = playerService;
+  }
+
+  play() {
+    this.playerService.play();
+    this.status = "playing";
+  }
+
+  stop() {
+    this.playerService.stop();
+    this.status = "stopped";
+  }
+
+  setVolume(value) {
+    this.volume = value;
+    this.playerService.volumeChange(value);
+  }
+
+  volumeUp() {
+    this.volume += 5;
+    this.playerService.volumeChange(this.volume);
+  }
+
+  volumeDown() {
+    this.volume -= 5;
+    this.playerService.volumeChange(this.volume);
+  }
+
+  prev() {
+    let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) - 1;
+
+    if (newIndex < 0) {
+      newIndex = 0;
     }
 
-    playOrPauseSong() {
-      if (playButton.dataset.playing === "false") {
-        audioElement.play().catch((e) => console.log("play failed", e));
-        playButton.dataset.playing = "true";
-        playButtonIcon.textContent = "pause_circle";
+    this.selectSong(this.songs[newIndex]);
+  }
 
-      } else if (playButton.dataset.playing === "true") {
-        audioElement.pause();
-        playButton.dataset.playing = "false";
-        playButtonIcon.textContent = "play_circle";
-      }
+  next() {
+    let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) + 1;
+
+    if (newIndex >= this.songs.length) {
+      newIndex = this.songs.length - 1;
     }
 
+    this.selectSong(this.songs[newIndex]);
+  }
+
+  currentTime() {
+    return this.playerService.getCurrentTime();
+  }
+
+  duration() {
+    return this.playerService.getDuration();
+  }
+
+  getStatus() {
+    return this.status;
+  }
+
+  toggleMute() {
+    this.playerService.toggleMute();
+  }
+
+  updateProgress() {
+    this.playerService.updateProgress();
+  }
+
+  setTimes() {
+    this.playerService.setTimes();
+  }
+
+  selectSong(track) {
+    this.currentSong = track;
+    this.playerService.updatePlayerSongInfo(track);
+    this.play();
+  }
 }
+
+export default Player;

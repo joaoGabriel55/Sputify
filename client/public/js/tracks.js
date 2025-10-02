@@ -1,4 +1,5 @@
 import { fetchTracks } from "./api/index.js";
+import Player from "./domain/player.js";
 
 export function htmlToNode(html) {
   const template = document.createElement("template");
@@ -21,10 +22,17 @@ const render = async () => {
   const response = await fetchTracks();
 
   const tracksGrid = document.querySelector(".tracks-grid");
+  
+  const songs = response || [];
+  const currentSong = songs.length > 0 ? songs[0] : null;
+  const player = new Player(songs, currentSong);
 
-  response.forEach((track) => {
+  window.songs = songs;
+  window.player = player;
+
+  songs.forEach((track) => {
     const htmlStr = `
-      <div class="track-card" data-id="${track.id}" data-title="${track.title}" data-artist="${track.artist}">
+      <div class="track-card">
         <img class="track-image" src="https://static.wikia.nocookie.net/beatles/images/8/82/Thebeatlesabbeyroad.jpg" alt="Track Title">
         <div class="track-info">
           <h3 class="track-title">${track.title}</h3>
@@ -35,25 +43,8 @@ const render = async () => {
 
     const div = htmlToNode(htmlStr.trim());
 
-    div.addEventListener("click", (event) => {
-      const audioElement = document.querySelector("audio");
-      const trackId = event.currentTarget.getAttribute("data-id");
-      const trackTitle = event.currentTarget.getAttribute("data-title");
-      const trackArtist = event.currentTarget.getAttribute("data-artist");
-      const playButton = document.getElementById("play-btn")
-      const playButtonIcon = playButton.querySelector("span");
-      const playerTrackTitle = document.querySelector(".track-player .player-track-info .track-title")
-
-      playerTrackTitle.textContent = `${trackTitle} - ${trackArtist}`;
-
-      audioElement.src = `http://localhost:4567/songs/${trackId}/audio`;
-
-      if (playButton.dataset.playing === "false") {
-        playButton.dataset.playing = "true";
-        playButtonIcon.textContent = "pause_circle";
-      }
-
-      audioElement.play().catch((e) => console.log("play failed", e));
+    div.addEventListener("click", () => {
+      player.selectSong(track);
     });
 
     tracksGrid.appendChild(div);
