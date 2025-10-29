@@ -49,10 +49,3 @@ body {
   padding-bottom: 10vh;
   overflow-y: scroll;
 }
-
-.main-header {
-  height: 50px;
-  background: var(--accent-fg-color);
-  color: var(--primary-color);
-  padding: 5px 10px;
-}

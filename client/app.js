@@ -1,15 +1,24 @@
 const express = require("express");
 const path = require("path");
+const expressLayouts = require('express-ejs-layouts');
 
 // Create an Express application
 const app = express();
+
+app.use(expressLayouts);
+app.set("layout", path.join(__dirname, "views", "layouts", "application.ejs"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 
 // Define a route to serve the HTML file
 app.get("/", (req, res) => {
-  // Send the HTML file as the response
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.render("index");
+});
+
+app.get("/playlists", (req, res) => {
+  res.render("playlists");
 });
 
 // Start the server
