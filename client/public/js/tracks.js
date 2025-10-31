@@ -44,6 +44,7 @@ const render = async () => {
 
     div.addEventListener("click", () => {
       player.selectSong(track);
+      player.play();
     });
 
     tracksGrid.appendChild(div);

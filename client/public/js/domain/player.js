@@ -42,10 +42,11 @@ class Player {
     let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) - 1;
 
     if (newIndex < 0) {
-      newIndex = 0;
+      return false;
     }
 
     this.selectSong(this.songs[newIndex]);
+    return true;
   }
 
   next() {
@@ -54,10 +55,11 @@ class Player {
     let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) + 1;
 
     if (newIndex >= this.songs.length) {
-      newIndex = this.songs.length - 1;
+      return false;
     }
 
     this.selectSong(this.songs[newIndex]);
+    return true;
   }
 
   currentTime() {
@@ -87,7 +89,6 @@ class Player {
   selectSong(track) {
     this.currentSong = track;
     this.playerService.updatePlayerSongInfo(track);
-    this.play();
   }
 
   getCurrentSong() {

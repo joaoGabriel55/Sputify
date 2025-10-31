@@ -34,10 +34,14 @@ window.addEventListener("load", () => {
   });
 
   nextButton.addEventListener("click", () => {
-    player.next();
+    if (player.next()) {
+      player.play();
+    }
   });
 
   prevButton.addEventListener("click", () => {
-    player.prev();
+    if (player.prev()) {
+      player.play();
+    }
   });
 });
