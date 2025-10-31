@@ -33,6 +33,14 @@ get '/songs' do
   songs.to_json
 end
 
+get '/songs/:id' do
+	song = songs.find { |s| s[:id] == params[:id].to_i }
+	halt 404, { error: 'Song not found' }.to_json unless song
+
+	content_type :json
+	song.to_json
+end
+
 # GET /tasks/:id - Retrieve a specific task by ID
 get '/songs/:id/audio' do
 	song = songs.find { |s| s[:id] == params[:id].to_i }

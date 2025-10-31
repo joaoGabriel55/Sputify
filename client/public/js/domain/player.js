@@ -14,11 +14,15 @@ class Player {
   }
 
   play() {
+    this.#checkCurrentSongPresence();
+
     this.playerService.play();
     this.status = "playing";
   }
 
   stop() {
+    this.#checkCurrentSongPresence();
+
     this.playerService.stop();
     this.status = "stopped";
   }
@@ -28,17 +32,13 @@ class Player {
     this.playerService.volumeChange(value);
   }
 
-  volumeUp() {
-    this.volume += 5;
-    this.playerService.volumeChange(this.volume);
-  }
-
-  volumeDown() {
-    this.volume -= 5;
-    this.playerService.volumeChange(this.volume);
+  getVolume() {
+    return this.volume;
   }
 
   prev() {
+    this.#checkCurrentSongPresence();
+
     let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) - 1;
 
     if (newIndex < 0) {
@@ -49,6 +49,8 @@ class Player {
   }
 
   next() {
+    this.#checkCurrentSongPresence();
+
     let newIndex = this.songs.findIndex((song) => song.id === this.currentSong.id) + 1;
 
     if (newIndex >= this.songs.length) {
@@ -86,6 +88,16 @@ class Player {
     this.currentSong = track;
     this.playerService.updatePlayerSongInfo(track);
     this.play();
+  }
+
+  getCurrentSong() {
+    return this.currentSong;
+  }
+
+  #checkCurrentSongPresence() {
+    if (!this.currentSong) {
+      throw new Error("There is no current song selected")
+    }
   }
 }
 

@@ -27,7 +27,6 @@ const render = async () => {
   const currentSong = songs.length > 0 ? songs[0] : null;
   const player = new Player(songs, currentSong);
 
-  window.songs = songs;
   window.player = player;
 
   songs.forEach((track) => {
@@ -53,7 +52,4 @@ const render = async () => {
 
 render();
 
-// interface volume e progresso mobile
-// mudar o audio selecionado com base no click
-// separar arquivos js por contextos e chamar individualmente no index.html
 // opcional: conseguir setar o tempo na interface de progresso
