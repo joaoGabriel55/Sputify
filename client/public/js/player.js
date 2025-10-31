@@ -2,6 +2,8 @@ const playButton = document.getElementById("play-btn");
 const volumeSlider = document.getElementById("volume");
 const volumeMuteButton = document.getElementById("volume-mute-btn");
 const audioElement = document.querySelector("audio");
+const nextButton = document.getElementById("next-btn");
+const prevButton = document.getElementById("prev-btn");
 import Player from "./domain/player.js";
 
 window.addEventListener("load", () => {
@@ -31,5 +33,13 @@ window.addEventListener("load", () => {
 
   volumeMuteButton.addEventListener("click", () => {
     player.toggleMute();
+  });
+
+  nextButton.addEventListener("click", () => {
+    player.next();
+  });
+
+  prevButton.addEventListener("click", () => {
+    player.prev();
   });
 });
