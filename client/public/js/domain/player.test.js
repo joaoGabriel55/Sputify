@@ -159,27 +159,27 @@ describe("Player", () => {
     });
 
     it("should call the selectSong method with the next song index", () => {
-      currentSong = songs[2];
-      player = new Player(songs, currentSong, mockPlayerService);
-
       player.next();
 
       expect(player.getCurrentSong()).toStrictEqual(
         expect.objectContaining({
-          id: songs[2].id,
-          title: songs[2].title,
+          id: songs[1].id,
+          title: songs[1].title,
         })
       );
     });
 
     describe("when song is the last one of the list", () =>{
       it("does not change current song", () => {
+        currentSong = songs[1];
+        player = new Player(songs, currentSong, mockPlayerService);
+
         player.next();
 
         expect(player.getCurrentSong()).toStrictEqual(
           expect.objectContaining({
-            id: songs[0].id,
-            title: songs[0].title,
+            id: songs[1].id,
+            title: songs[1].title,
           })
         );
       })
