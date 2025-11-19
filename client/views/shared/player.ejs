@@ -70,7 +70,7 @@
         class="player-volume"
       />
     </div>
-    <button type="button" class="player-button">
+    <button type="button" class="player-button" id="add-playlist-btn">
       <span class="material-symbols-outlined">playlist_add</span>
     </button>
   </div>
@@ -78,4 +78,84 @@
     src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/858/outfoxing.mp3"
     crossorigin="anonymous"
   ></audio>
+  <dialog class="playlist-dialog">
+    <div class="dialog-container">
+      <div class="playlist-options">
+        <div class="playlist-option-wrap">
+          <input type="radio" id="createNewPlaylist" name="playlistChoice" value="newPlaylist" />
+          <label for="playlistChoice1">Criar uma nova playlist</label>
+        </div>
+
+        <div class="playlist-option-wrap">
+          <input type="radio" id="addToPlaylist" name="playlistChoice" value="existingPlaylist" />
+          <label for="playlistChoice2">Adicionar à uma playlist existente</label>
+        </div>
+
+        <form id="add-new-playlist-form" class="playlist-form">
+          <label for="newPlaylistTitle">Título da Playlist</label>
+          <input type="text" name="newPlaylistTitle" id="">
+          <label for="newPlaylistTitle">Descrição da Playlist</label>
+          <input type="text" name="newPlaylistDescription" id="">
+        </form>
+
+        <form id="select-playlist-form" class="playlist-form">
+          <select name="playlist" id="" class="select-playlist">
+            <option value="1">Megadeth#1</option>
+            <option value="2">Lovers#2</option>
+            <option value="3">Felicia#3</option>
+          </select>
+        </form>
+      </div>
+      <button autofocus id="close-dialog-btn" class="close-btn">Cancel</button>
+    </div>
+  </dialog>
 </div>
+
+<script>
+  const addNewPlaylistForm = document.getElementById("add-new-playlist-form");
+  const selectPlaylistForm = document.getElementById("select-playlist-form");
+</script>
+
+<style>
+  .playlist-dialog {
+    margin: auto;
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+
+    background: var(--accent-fg-color);
+    box-shadow: 0 -2px 16px var(--shadow-color);
+    color: var(--font-color);
+  }
+
+  .dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .playlist-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .playlist-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 10px 15px;
+  } 
+
+  .select-playlist {
+    padding: 4px 8px;
+  }
+
+  .close-btn {
+    align-self: flex-end;
+    padding: 8px 16px;
+    border: none;
+    cursor: pointer;
+  }
+</style>
