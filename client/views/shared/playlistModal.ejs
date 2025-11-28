@@ -1,0 +1,115 @@
+<dialog id="playlist-dialog" class="playlist-dialog">
+  <div id="dialog-container" class="dialog-container">
+    <button autofocus id="close-dialog-btn" class="close-btn material-symbols-outlined">close</button>
+    <div class="playlist-options">
+      <div class="playlist-option-wrap">
+        <input type="radio" id="addToPlaylist" checked name="playlistChoice" value="existingPlaylist" />
+        <label for="playlistChoice2">Adicionar à uma playlist existente</label>
+      </div>
+
+      <div class="playlist-option-wrap">
+        <input type="radio" id="createNewPlaylist" name="playlistChoice" value="newPlaylist" />
+        <label for="playlistChoice1">Criar uma nova playlist</label>
+      </div>
+
+      <div id="select-playlist-container">
+        <form id="select-playlist-form" class="playlist-form">
+          <select name="playlist" id="" class="select-playlist">
+            <option value="1">Megadeth#1</option>
+            <option value="2">Lovers#2</option>
+            <option value="3">Felicia#3</option>
+          </select>
+        </form>
+      </div>
+
+      <div id="add-new-playlist-container" hidden>
+        <form id="add-new-playlist-form" class="playlist-form">
+          <label for="newPlaylistTitle">Título da Playlist</label>
+          <input type="text" name="newPlaylistTitle" id="">
+          <label for="newPlaylistTitle">Descrição da Playlist</label>
+          <input type="text" name="newPlaylistDescription" id="">
+        </form>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+
+<script>
+  const selectPlaylistContainer = document.getElementById("select-playlist-container");
+  const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
+
+  const addToPlaylistRadio = document.getElementById("addToPlaylist");
+  const createNewPlaylistRadio = document.getElementById("createNewPlaylist");
+
+  addToPlaylistRadio.checked = true;
+  createNewPlaylistRadio.checked = false;
+
+  addToPlaylistRadio.addEventListener("change", () => {
+    if (addToPlaylistRadio.checked) {
+      selectPlaylistContainer.hidden = false;
+      addNewPlaylistContainer.hidden = true;
+    }
+  });
+
+  createNewPlaylistRadio.addEventListener("change", () => {
+    if (createNewPlaylistRadio.checked) {
+      selectPlaylistContainer.hidden = true;
+      addNewPlaylistContainer.hidden = false;
+    }
+  });
+</script>
+
+<style>
+  .playlist-dialog {
+    margin: auto;
+    padding: 20px;
+    border: none;
+    border-radius: 15px;
+
+    background: var(--accent-fg-color);
+    box-shadow: 0 -2px 16px var(--shadow-color);
+    color: var(--font-color);
+  }
+
+  .dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .playlist-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .playlist-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    padding: 20px 15px;
+    margin-top: 10px;
+    border: 1px solid white;
+    border-radius: 10px;
+  } 
+
+  .select-playlist {
+    padding: 4px 8px;
+  }
+
+  .close-btn {
+    align-self: flex-end;
+    border: none;
+    cursor: pointer;
+    background: none;
+    box-shadow: none;
+    color: white;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+  }
+</style>

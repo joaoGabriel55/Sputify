@@ -58,4 +58,10 @@ window.addEventListener("load", () => {
     const dialog = document.querySelector("dialog");
     dialog.close();
   });
+
+  const playlistDialog = document.getElementById('playlist-dialog');
+  playlistDialog.addEventListener('click', () => myDialog.close());
+
+  const dialogDiv = document.getElementById('dialog-container');
+  dialogDiv.addEventListener('click', (event) => event.stopPropagation());
 });
