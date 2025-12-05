@@ -1,9 +1,11 @@
 class Playlist {
+  id;
   #songs;
   title;
   description;
 
   constructor(songs, title, description = null) {
+    this.id = crypto.randomUUID();
     this.#validate(title);
     this.#songs = songs;
     this.title = title;
@@ -12,6 +14,7 @@ class Playlist {
 
   toJson() {
     return { 
+      id: this.id,
       title: this.title,
       description: this.description,
       songs: this.#songs

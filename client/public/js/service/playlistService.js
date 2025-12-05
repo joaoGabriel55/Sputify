@@ -1,39 +1,45 @@
-// "playlists": {
-//   "playlist1": {
-//     "title": "My Favorites",
-//     "description": "A collection of my favorite songs.",
-//     "songs": [1, 2, 3, 4, 5]
-//   }
-// }
-
 import Playlist from "../domain/playlist";
 
-const playlists = JSON.parse(localStorage.getItem('playlists'))
-
-const newPlaylists = playlists.map((playlistData) => {
-  const {  title, description, songs } = playlistData;
-  return new Playlist(songs, title, description).toJson();
-});
-
-
-localStorage.setItem('playlist', playlists)
-
-
 class PlaylistService {
+  playlists;
+
   constructor() {
-    const playlistLocalStorage = localStorage.getItem('playlists')
-    this.playlists = playlistLocalStorage ? JSON.parse(playlistLocalStorage) : [];
+    this.playlists = this.#getPlaylistsFromLocalStorage();
   }
 
   createNewPlaylist({ title, description = null }) {
     const newPlaylist = new Playlist([], title, description);
-    this.playlists.push(newPlaylist.toJson());
+    this.playlists.push(newPlaylist);
     this.#savePlaylistsOnLocalStorage();
   }
 
-  addSongToPlaylist(songId, playlist) {}
+  addSongToPlaylist(songId, playlistId) {
+    const playlistIndex = this.playlists.findIndex((p => p.id === playlistId));
 
-  removeSongFromPlaylist(songId, playlist) {}
+    if (playlistIndex === -1) {
+      throw new Error("Playlist not found");
+    }
 
-  #savePlaylistsOnLocalStorage() {}
+    this.playlists[playlistIndex].addSong(songId);
+
+    this.#savePlaylistsOnLocalStorage();
+  }
+
+  #savePlaylistsOnLocalStorage() {
+    const playlistsJson = this.playlists.map((playlist) => playlist.toJson());
+    localStorage.setItem("playlists", JSON.stringify(playlistsJson));
+  }
+
+  #getPlaylistsFromLocalStorage() {
+    const playlistLocalStorage = localStorage.getItem("playlists");
+    const playlists = playlistLocalStorage ? JSON.parse(playlistLocalStorage) : [];
+
+    return playlists.map((playlistData) => {
+      const { title, description, songs } = playlistData;
+
+      return new Playlist(songs, title, description);
+    });
+  }
 }
+
+export default PlaylistService;
