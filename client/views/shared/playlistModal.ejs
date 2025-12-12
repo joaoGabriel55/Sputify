@@ -9,7 +9,7 @@
 
       <div class="playlist-option-wrap">
         <input type="radio" id="createNewPlaylist" name="playlistChoice" value="newPlaylist" />
-        <label for="playlistChoice1">Criar uma nova playlist</label>
+        <label for="playlistChoice1">Adicionar à uma nova playlist</label>
       </div>
 
       <div id="select-playlist-container">
@@ -28,54 +28,13 @@
           <input type="text" name="newPlaylistTitle" id="">
           <label for="newPlaylistTitle">Descrição da Playlist</label>
           <input type="text" name="newPlaylistDescription" id="">
-          <button type="submit">Create</button>
+          <button type="submit">Criar e adicionar</button>
         </form>
       </div>
     </div>
   </div>
 </dialog>
 
-
-<script>
-  const selectPlaylistContainer = document.getElementById("select-playlist-container");
-  const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
-
-  const addToPlaylistRadio = document.getElementById("addToPlaylist");
-  const createNewPlaylistRadio = document.getElementById("createNewPlaylist");
-
-  addToPlaylistRadio.checked = true;
-  createNewPlaylistRadio.checked = false;
-
-  addToPlaylistRadio.addEventListener("change", () => {
-    if (addToPlaylistRadio.checked) {
-      selectPlaylistContainer.hidden = false;
-      addNewPlaylistContainer.hidden = true;
-    }
-  });
-
-  createNewPlaylistRadio.addEventListener("change", () => {
-    if (createNewPlaylistRadio.checked) {
-      selectPlaylistContainer.hidden = true;
-      addNewPlaylistContainer.hidden = false;
-    }
-  });
-
-  const newPlaylistForm = document.getElementById("add-new-playlist-form");
-
-  newPlaylistForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-
-    console.log("creating playlist...", e);
-
-    const formData = new FormData(newPlaylistForm);
-
-    const title = formData.get("newPlaylistTitle");
-    const description = formData.get("newPlaylistDescription");
-
-    console.log({ title, description });
-  });
-</script>
-[]
 <style>
   .playlist-dialog {
     margin: auto;

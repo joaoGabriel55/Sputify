@@ -1,5 +1,6 @@
 import { fetchTracks } from "./api/index.js";
 import Player from "./domain/player.js";
+import PlaylistService from "./service/playlistService.js";
 
 export function htmlToNode(html) {
   const template = document.createElement("template");
@@ -26,8 +27,10 @@ const render = async () => {
   const songs = response || [];
   const currentSong = songs.length > 0 ? songs[0] : null;
   const player = new Player(songs, currentSong);
+  const playlistService = new PlaylistService();
 
   window.player = player;
+  window.playlistService = playlistService;
 
   songs.forEach((track) => {
     const htmlStr = `

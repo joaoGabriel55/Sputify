@@ -1,4 +1,4 @@
-import Playlist from "../domain/playlist";
+import Playlist from "../domain/playlist.js";
 
 class PlaylistService {
   playlists;
@@ -7,8 +7,8 @@ class PlaylistService {
     this.playlists = this.#getPlaylistsFromLocalStorage();
   }
 
-  createNewPlaylist({ title, description = null }) {
-    const newPlaylist = new Playlist([], title, description);
+  createNewPlaylist({ songs = [], title, description = null }) {
+    const newPlaylist = new Playlist(songs, title, description);
     this.playlists.push(newPlaylist);
     this.#savePlaylistsOnLocalStorage();
   }
