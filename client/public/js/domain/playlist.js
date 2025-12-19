@@ -1,24 +1,36 @@
 class Playlist {
-  id;
+  #id;
   #songs;
-  title;
-  description;
+  #title;
+  #description;
 
-  constructor(songs, title, description = null) {
-    this.id = crypto.randomUUID();
+  constructor(songs, title, description = null, id = crypto.randomUUID()) {
+    this.#id = id;
     this.#validate(title);
     this.#songs = songs;
-    this.title = title;
-    this.description = description;
+    this.#title = title;
+    this.#description = description;
   }
 
   toJson() {
     return { 
-      id: this.id,
-      title: this.title,
-      description: this.description,
+      id: this.#id,
+      title: this.#title,
+      description: this.#description,
       songs: this.#songs
     }
+  }
+
+  get id() {
+    return this.#id;
+  }
+
+  get title() {
+    return this.#title;
+  }
+
+  get description() {
+    return this.#description
   }
 
   addSong(songId) {

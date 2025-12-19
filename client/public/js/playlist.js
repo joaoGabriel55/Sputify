@@ -1,15 +1,51 @@
 import PlaylistService from "./service/playlistService.js";
 
+export function htmlToNode(html) {
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const nNodes = template.content.childNodes.length;
+  if (nNodes !== 1) {
+    throw new Error(
+      `html parameter must represent a single node; got ${nNodes}. ` +
+        "Note that leading or trailing spaces around an element in your " +
+        'HTML, like " <img/> ", get parsed as text nodes neighbouring ' +
+        "the element; call .trim() on your input to avoid this.",
+    );
+  }
+  return template.content.firstChild;
+}
+
 window.addEventListener("load", () => {
   const playlistService = new PlaylistService();
   const selectPlaylistContainer = document.getElementById("select-playlist-container");
   const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
+  const selectPlaylistOption = document.getElementById("select-playlist-option");
+  const playlistSelect = document.getElementById("select-playlist");
+  const playlists = playlistService.playlists;
 
   const addToPlaylistRadio = document.getElementById("addToPlaylist");
   const createNewPlaylistRadio = document.getElementById("createNewPlaylist");
 
-  addToPlaylistRadio.checked = true;
-  createNewPlaylistRadio.checked = false;
+
+  if (playlists.length > 0) {
+    playlists.forEach((playlist) => {
+      const htmlStr = `<option value=${playlist.id}>${playlist.title}</option>`;
+
+      const div = htmlToNode(htmlStr.trim());
+      playlistSelect.appendChild(div);
+    });
+
+    addToPlaylistRadio.checked = true;
+    createNewPlaylistRadio.checked = false;
+  } else {
+    selectPlaylistOption.hidden = true;
+
+    addToPlaylistRadio.checked = false;
+    createNewPlaylistRadio.checked = true;
+
+    selectPlaylistContainer.hidden = true;
+    addNewPlaylistContainer.hidden = false;
+  }
 
   addToPlaylistRadio.addEventListener("change", () => {
     if (addToPlaylistRadio.checked) {
@@ -25,7 +61,23 @@ window.addEventListener("load", () => {
     }
   });
 
+  const selectPlaylistForm = document.getElementById("select-playlist-form");
   const newPlaylistForm = document.getElementById("add-new-playlist-form");
+
+  selectPlaylistForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    // mudar isso para pegar do data-attribute
+    const songId = window.player.getCurrentSong().id;
+
+    const formData = new FormData(selectPlaylistForm);
+    const playlistId = formData.get("playlistId");
+
+    playlistService.addSongToPlaylist(songId, playlistId);
+
+    const dialog = document.querySelector("#playlist-dialog");
+    dialog.close();
+  });
 
   newPlaylistForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -42,5 +94,8 @@ window.addEventListener("load", () => {
     console.log({ title, description });
 
     playlistService.createNewPlaylist({ songs: [songId], title, description });
+
+    const dialog = document.querySelector("#playlist-dialog");
+    dialog.close();
   });
 });

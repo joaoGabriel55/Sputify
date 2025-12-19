@@ -2,7 +2,7 @@
   <div id="dialog-container" class="dialog-container">
     <button autofocus id="close-dialog-btn" class="close-btn material-symbols-outlined">close</button>
     <div class="playlist-options">
-      <div class="playlist-option-wrap">
+      <div class="playlist-option-wrap" id="select-playlist-option">
         <input type="radio" id="addToPlaylist" checked name="playlistChoice" value="existingPlaylist" />
         <label for="playlistChoice2">Adicionar à uma playlist existente</label>
       </div>
@@ -14,11 +14,10 @@
 
       <div id="select-playlist-container">
         <form id="select-playlist-form" class="playlist-form">
-          <select name="playlist" id="" class="select-playlist">
-            <option value="1">Megadeth#1</option>
-            <option value="2">Lovers#2</option>
-            <option value="3">Felicia#3</option>
+          <select name="playlistId" id="select-playlist" class="select-playlist">
           </select>
+
+          <button type="submit">Adicionar à playlist</button>
         </form>
       </div>
 
