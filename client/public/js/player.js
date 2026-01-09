@@ -4,8 +4,6 @@ const volumeMuteButton = document.getElementById("volume-mute-btn");
 const audioElement = document.querySelector("audio");
 const nextButton = document.getElementById("next-btn");
 const prevButton = document.getElementById("prev-btn");
-const addPlaylistButton = document.getElementById("add-playlist-btn");
-const closeDialogButton = document.getElementById("close-dialog-btn");
 
 window.addEventListener("load", () => {
   const player = window.player;
@@ -46,22 +44,4 @@ window.addEventListener("load", () => {
       player.play();
     }
   });
-
-  addPlaylistButton.addEventListener("click", () => {
-    console.log("Opening dialog...");
-    const dialog = document.querySelector("dialog");
-    dialog.showModal();
-  });
-
-  closeDialogButton.addEventListener("click", () => {
-    console.log("Closing dialog...");
-    const dialog = document.querySelector("dialog");
-    dialog.close();
-  });
-
-  const playlistDialog = document.getElementById('playlist-dialog');
-  playlistDialog.addEventListener('click', () => myDialog.close());
-
-  const dialogDiv = document.getElementById('dialog-container');
-  dialogDiv.addEventListener('click', (event) => event.stopPropagation());
 });

@@ -16,50 +16,26 @@ export function htmlToNode(html) {
 }
 
 window.addEventListener("load", () => {
-  const playlistService = new PlaylistService();
-  const selectPlaylistContainer = document.getElementById("select-playlist-container");
-  const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
-  const selectPlaylistOption = document.getElementById("select-playlist-option");
-  const playlistSelect = document.getElementById("select-playlist");
-  const playlists = playlistService.playlists;
+  const playlistService = init();
 
-  const addToPlaylistRadio = document.getElementById("addToPlaylist");
-  const createNewPlaylistRadio = document.getElementById("createNewPlaylist");
+  const addPlaylistButton = document.getElementById("add-playlist-btn");
+  const closeDialogButton = document.getElementById("close-dialog-btn");
 
-
-  if (playlists.length > 0) {
-    playlists.forEach((playlist) => {
-      const htmlStr = `<option value=${playlist.id}>${playlist.title}</option>`;
-
-      const div = htmlToNode(htmlStr.trim());
-      playlistSelect.appendChild(div);
-    });
-
-    addToPlaylistRadio.checked = true;
-    createNewPlaylistRadio.checked = false;
-  } else {
-    selectPlaylistOption.hidden = true;
-
-    addToPlaylistRadio.checked = false;
-    createNewPlaylistRadio.checked = true;
-
-    selectPlaylistContainer.hidden = true;
-    addNewPlaylistContainer.hidden = false;
-  }
-
-  addToPlaylistRadio.addEventListener("change", () => {
-    if (addToPlaylistRadio.checked) {
-      selectPlaylistContainer.hidden = false;
-      addNewPlaylistContainer.hidden = true;
-    }
+  addPlaylistButton.addEventListener("click", () => {
+    console.log("Opening dialog...");
+    const dialog = document.querySelector("dialog");
+    init();
+    dialog.showModal();
   });
 
-  createNewPlaylistRadio.addEventListener("change", () => {
-    if (createNewPlaylistRadio.checked) {
-      selectPlaylistContainer.hidden = true;
-      addNewPlaylistContainer.hidden = false;
-    }
+  closeDialogButton.addEventListener("click", () => {
+    console.log("Closing dialog...");
+    const dialog = document.querySelector("dialog");
+    dialog.close();
   });
+
+  const dialogDiv = document.getElementById('dialog-container');
+  dialogDiv.addEventListener('click', (event) => event.stopPropagation());
 
   const selectPlaylistForm = document.getElementById("select-playlist-form");
   const newPlaylistForm = document.getElementById("add-new-playlist-form");
@@ -67,7 +43,6 @@ window.addEventListener("load", () => {
   selectPlaylistForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    // mudar isso para pegar do data-attribute
     const btn = document.getElementById("add-playlist-btn");
     const songId = btn.getAttribute("songId");
 
@@ -99,4 +74,59 @@ window.addEventListener("load", () => {
     const dialog = document.querySelector("#playlist-dialog");
     dialog.close();
   });
+
+  function init() {
+    const playlistService = new PlaylistService();
+    const playlists = playlistService.playlists;
+    console.log("playlists", playlists);
+    console.log("Init running");
+
+    const selectPlaylistContainer = document.getElementById("select-playlist-container");
+    const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
+    const selectPlaylistOption = document.getElementById("select-playlist-option");
+    const playlistSelect = document.getElementById("select-playlist");
+
+    const addToPlaylistRadio = document.getElementById("addToPlaylist");
+    const createNewPlaylistRadio = document.getElementById("createNewPlaylist");
+
+    playlistSelect.innerHTML = "";
+
+    if (playlists.length > 0) {
+      console.log('playlistSelect before', playlistSelect);
+      playlists.forEach((playlist) => {
+        const htmlStr = `<option value=${playlist.id}>${playlist.title}</option>`;
+
+        const div = htmlToNode(htmlStr.trim());
+        playlistSelect.appendChild(div);
+      });
+      
+      console.log("playlistSelect after", playlistSelect);
+      addToPlaylistRadio.checked = true;
+      createNewPlaylistRadio.checked = false;
+    } else {
+      selectPlaylistOption.hidden = true;
+
+      addToPlaylistRadio.checked = false;
+      createNewPlaylistRadio.checked = true;
+
+      selectPlaylistContainer.hidden = true;
+      addNewPlaylistContainer.hidden = false;
+    }
+
+    addToPlaylistRadio.addEventListener("change", () => {
+      if (addToPlaylistRadio.checked) {
+        selectPlaylistContainer.hidden = false;
+        addNewPlaylistContainer.hidden = true;
+      }
+    });
+
+    createNewPlaylistRadio.addEventListener("change", () => {
+      if (createNewPlaylistRadio.checked) {
+        selectPlaylistContainer.hidden = true;
+        addNewPlaylistContainer.hidden = false;
+      }
+    });
+
+    return playlistService;
+  }
 });
