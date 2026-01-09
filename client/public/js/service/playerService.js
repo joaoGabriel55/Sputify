@@ -6,6 +6,7 @@ class PlayerService {
     this.playerDuration = document.querySelector(".player-time-duration")
     this.progressFilled = document.querySelector(".player-progress-filled")
     this.audioElement = document.querySelector("audio");
+    this.addPlaylistPlayerButton = document.getElementById("add-playlist-btn");
     this.lastAudioVolumeBeforeMuted = 0;
   }
 
@@ -50,6 +51,10 @@ class PlayerService {
     playerTrackTitle.textContent = `${title} - ${artist}`;
 
     this.audioElement.src = `http://localhost:4567/songs/${id}/audio`;
+
+    console.log(this.addPlaylistPlayerButton);
+
+    this.addPlaylistPlayerButton.setAttribute("songId", id);
   }
 
   updateProgress() {

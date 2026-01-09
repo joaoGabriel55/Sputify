@@ -68,7 +68,8 @@ window.addEventListener("load", () => {
     e.preventDefault();
 
     // mudar isso para pegar do data-attribute
-    const songId = window.player.getCurrentSong().id;
+    const btn = document.getElementById("add-playlist-btn");
+    const songId = btn.getAttribute("songId");
 
     const formData = new FormData(selectPlaylistForm);
     const playlistId = formData.get("playlistId");
@@ -85,8 +86,8 @@ window.addEventListener("load", () => {
     console.log("creating playlist...", e);
 
     const formData = new FormData(newPlaylistForm);
-    // mudar isso para pegar do data-attribute
-    const songId = window.player.getCurrentSong().id;
+    const btn = document.getElementById("add-playlist-btn");
+    const songId = btn.getAttribute("songId");
 
     const title = formData.get("newPlaylistTitle");
     const description = formData.get("newPlaylistDescription");

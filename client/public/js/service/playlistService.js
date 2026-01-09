@@ -15,12 +15,17 @@ class PlaylistService {
 
   addSongToPlaylist(songId, playlistId) {
     const playlistIndex = this.#playlists.findIndex((p => p.id === playlistId));
+    const parsedSongId = Number(songId);
+
+    if (parsedSongId === NaN) {
+      throw new Error("Song not found");
+    }
 
     if (playlistIndex === -1) {
       throw new Error("Playlist not found");
     }
 
-    this.#playlists[playlistIndex].addSong(songId);
+    this.#playlists[playlistIndex].addSong(parsedSongId);
 
     this.#savePlaylistsOnLocalStorage();
   }
