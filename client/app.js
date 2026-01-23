@@ -17,6 +17,10 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/playlists/:id", (req, res) => {
+  res.render("playlist");
+});
+
 app.get("/playlists", (req, res) => {
   res.render("playlists");
 });
