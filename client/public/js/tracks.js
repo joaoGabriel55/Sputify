@@ -1,4 +1,4 @@
-import { fetchTracks } from "./api/index.js";
+import { fetchTrackAudios } from "./api/index.js";
 import Player from "./domain/player.js";
 import PlaylistService from "./service/playlistService.js";
 import htmlToNode from "./shared/htmlToNode.js";
@@ -6,7 +6,7 @@ import htmlToNode from "./shared/htmlToNode.js";
 const render = async () => {
   console.log("Rendering tracks...");
 
-  const response = await fetchTracks();
+  const response = await fetchTrackAudios();
 
   const tracksGrid = document.querySelector(".tracks-grid");
   

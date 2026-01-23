@@ -1,4 +1,4 @@
-import { fetchTracks, fetchTrack } from "./index";
+import { fetchTrackAudios, fetchTrackAudio } from "./index";
 import { HttpClient } from "../client/httpClient";
 
 jest.mock('../client/httpClient', () => ({
@@ -10,7 +10,7 @@ describe("API", () => {
     jest.clearAllMocks();
   });
 
-  describe("fetchTracks", () => {
+  describe("fetchTrackAudios", () => {
     it("should fetch tracks", async () => {
       HttpClient.mockImplementation(() => {
         return {
@@ -23,12 +23,12 @@ describe("API", () => {
         };
       });
 
-      const tracks = await fetchTracks();
+      const tracks = await fetchTrackAudios();
       expect(tracks).toHaveLength(2);
     });
   });
 
-  describe("fetchTrack", () => {
+  describe("fetchTrackAudio", () => {
     it("should fetch track", async () => {
       const mockFile = new File(['file content'], 'test.mp3', { type: 'audio/mpeg' });
 
@@ -40,7 +40,7 @@ describe("API", () => {
         };
       });
 
-      const track = await fetchTrack(1);
+      const track = await fetchTrackAudio(1);
       expect(track).toBe(mockFile);
       expect(mockFile.type).toBe('audio/mpeg')
     });

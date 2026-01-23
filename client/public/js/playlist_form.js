@@ -68,8 +68,6 @@ window.addEventListener("load", () => {
   function init() {
     const playlistService = new PlaylistService();
     const playlists = playlistService.playlists;
-    console.log("playlists", playlists);
-    console.log("Init running");
 
     const selectPlaylistContainer = document.getElementById("select-playlist-container");
     const addNewPlaylistContainer = document.getElementById("add-new-playlist-container");
