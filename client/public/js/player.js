@@ -4,9 +4,17 @@ const volumeMuteButton = document.getElementById("volume-mute-btn");
 const audioElement = document.querySelector("audio");
 const nextButton = document.getElementById("next-btn");
 const prevButton = document.getElementById("prev-btn");
+import Player from "./domain/player.js";
 
 window.addEventListener("load", () => {
-  const player = window.player;
+  let player = window.player;
+
+  if (!player) {
+    player = new Player([], null);
+    window.player = player;
+  }
+
+  console.log("player", player);
 
   // Set times after page load
   player?.setTimes();

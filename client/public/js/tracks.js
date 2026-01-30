@@ -1,5 +1,4 @@
 import { fetchTrackAudios } from "./api/index.js";
-import Player from "./domain/player.js";
 import PlaylistService from "./service/playlistService.js";
 import htmlToNode from "./shared/htmlToNode.js";
 
@@ -12,10 +11,9 @@ const render = async () => {
   
   const songs = response || [];
   const currentSong = songs.length > 0 ? songs[0] : null;
-  const player = new Player(songs, currentSong);
+  const player = window.player;
   const playlistService = new PlaylistService();
 
-  window.player = player;
   window.playlistService = playlistService;
 
   songs.forEach((track) => {
@@ -40,6 +38,6 @@ const render = async () => {
   });
 };
 
-render();
-
-// opcional: conseguir setar o tempo na interface de progresso
+window.addEventListener("load", () => {
+  render();
+});

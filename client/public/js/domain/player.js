@@ -87,8 +87,10 @@ class Player {
   }
 
   selectSong(track) {
+    console.log("Selecting song", track)
     this.currentSong = track;
     this.playerService.updatePlayerSongInfo(track);
+    console.log("Player", this);
   }
 
   getCurrentSong() {

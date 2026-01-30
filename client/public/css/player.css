@@ -97,6 +97,13 @@
   background: var(--button-hover-color);
   color: var(--button-hover-font-color);
   transform: scale(1.1);
+
+  &:disabled {
+    background: var(--button-color);
+    color: var(--button-font-color);
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
 .player-button span {

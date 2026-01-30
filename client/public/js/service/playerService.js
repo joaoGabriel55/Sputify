@@ -14,6 +14,8 @@ class PlayerService {
     this.audioElement.play().catch((e) => console.log("play failed", e));
     this.playButton.dataset.playing = "true";
     this.playButtonIcon.textContent = "pause_circle";
+
+    this.#enablePlayButton();
   }
 
   stop() {
@@ -72,6 +74,11 @@ class PlayerService {
     this.playerDuration.textContent = new Date(this.audioElement.duration * 1000)
       .toISOString()
       .substr(14, 5)
+  }
+
+  #enablePlayButton() {
+    this.playButton.disabled = false;
+    this.playButton.classList.remove("button--disabled");
   }
 }
 

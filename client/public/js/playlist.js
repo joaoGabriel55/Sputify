@@ -28,6 +28,7 @@ const render = async () => {
 
   const trackList = document.querySelector(".track-list");
   const player = window.player;
+  console.log("Playlist", player);
 
   songs.forEach((track) => {
     const htmlStr = `
