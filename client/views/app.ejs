@@ -1,0 +1,44 @@
+<div id="home-view">
+  <%- include('./index') %>
+</div>
+
+<div id="playlists-view" hidden>
+  <%- include('./playlists') %>
+</div>
+
+<div id="playlist-view" hidden>
+  <%- include('./playlist') %>
+</div>
+
+
+<script>
+  const routes = {"/": "home-view",
+                  "/playlists": "playlists-view",
+                  "/playlist": "playlist-view"
+                }
+
+  navigation.addEventListener("navigate", (event) => {
+    const url = new URL(event.destination.url);
+    console.log(url.pathname);
+  })
+
+  function navigateTo(path) {
+    // Add a new entry to the history and update the URL
+    history.pushState(null, null, path);
+    // Update the content dynamically based on the selected path
+    updateContent(path);
+  }
+
+  function updateContent(path) {
+    // Fetch content from the server or perform other actions based on the path
+    // For simplicity, let's just update the content in the example
+    // document.getElementById('content').innerHTML = `Content for ${path}`;
+    Object.keys(routes).forEach(route => {
+      if (route === path) {
+        document.getElementById(routes[route]).hidden = false;
+      } else {
+        document.getElementById(routes[route]).hidden = true;
+      }
+    });
+  }
+</script>

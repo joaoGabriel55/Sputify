@@ -13,16 +13,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Define a route to serve the HTML file
-app.get("/", (req, res) => {
-  res.render("index");
-});
-
-app.get("/playlists/:id", (req, res) => {
-  res.render("playlist");
-});
-
-app.get("/playlists", (req, res) => {
-  res.render("playlists");
+app.get(/\//, (req, res) => {
+  res.render("app");
 });
 
 // Start the server
