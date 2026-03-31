@@ -1,0 +1,55 @@
+const playButton = document.getElementById("play-btn");
+const volumeSlider = document.getElementById("volume");
+const volumeMuteButton = document.getElementById("volume-mute-btn");
+const audioElement = document.querySelector("audio");
+const nextButton = document.getElementById("next-btn");
+const prevButton = document.getElementById("prev-btn");
+import Player from "./domain/player.js";
+
+window.addEventListener("load", () => {
+  let player = window.player;
+
+  if (!player) {
+    player = new Player([], null);
+    window.player = player;
+  }
+
+  console.log("player", player);
+
+  // Set times after page load
+  player?.setTimes();
+  // Update progress bar and time values as audio plays
+  audioElement.addEventListener("timeupdate", () => {
+    player.updateProgress();
+    player.setTimes();
+  });
+
+  playButton.addEventListener("click", () => {
+    if (playButton.dataset.playing === "false") {
+      player.play();
+    } else if (playButton.dataset.playing === "true") {
+      player.stop();
+    }
+  });
+
+  volumeSlider.addEventListener("input", (event) => {
+    player.setVolume(event.target.value);
+    volumeSlider.value = event.target.value;
+  });
+
+  volumeMuteButton.addEventListener("click", () => {
+    player.toggleMute();
+  });
+
+  nextButton.addEventListener("click", () => {
+    if (player.next()) {
+      player.play();
+    }
+  });
+
+  prevButton.addEventListener("click", () => {
+    if (player.prev()) {
+      player.play();
+    }
+  });
+});

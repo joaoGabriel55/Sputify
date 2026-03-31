@@ -1,0 +1,46 @@
+
+.tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  width: 80%;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.track-info {
+  color: var(--button-font-color);
+  width: 100%;
+}
+
+.track-info .track-title {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.track-info .track-artist {
+  font-size: 0.9em;
+  color: var(--secondary-font-color);
+}
+
+.track-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px;
+  background: var(--accent-fg-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 16px var(--shadow-color);
+  gap: 10px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.track-card:hover {
+  transform: scale(1.05);
+}
+
+.track-image {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+}

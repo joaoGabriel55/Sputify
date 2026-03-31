@@ -1,0 +1,51 @@
+:root {
+  --primary-color: #ef7c8e;
+  --secondary-color: #fae8e0;
+  --accent-color: #b6e2d3;
+
+  --accent-fg-color: #444;
+  --font-color: #fff;
+  --secondary-font-color: #ccc;
+  --bg-color: #222222fa;
+  --shadow-color: #00000052;
+  --button-color: #333;
+  --button-font-color: #eee;
+  --button-hover-color: #666;
+  --button-hover-font-color: #fff;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --accent-fg-color: #e6e6e6;
+    --font-color: #222;
+    --secondary-font-color: #444;
+    --bg-color: #faf9f6;
+    --shadow-color: #b6e2d352;
+    --button-color: #e6e6e6;
+    --button-font-color: #0a0909;
+    --button-hover-color: #b6e2d3;
+    --button-hover-font-color: #222;
+
+    scrollbar-color: auto;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #bbb #222;
+}
+
+body {
+  background-color: var(--bg-color);
+}
+
+.main-container {
+  height: auto;
+  padding: 10px;
+  padding-bottom: 10vh;
+  overflow-y: scroll;
+}
